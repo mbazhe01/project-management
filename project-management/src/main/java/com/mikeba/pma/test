@@ -1,0 +1,7 @@
+SELECT e.first_name as firstName, e.last_name as lastName, count(pe.employee_id) as ProjectCount
+ FROM EMPLOYEE e LEFT JOIN PROJECT_EMPLOYEE pe
+ ON e.employee_id = pe.employee_id
+group by firstName, lastName
+order by 3 desc
+
+SELECT e.first_name as firstName, e.last_name as lastName, count(pe.employee_id) as projectCount FROM EMPLOYEE e LEFT JOIN PROJECT_EMPLOYEE pe ON e.employee_id = pe.employee_id group by firstName, lastName, e.employee_idorder by 3 desc]
