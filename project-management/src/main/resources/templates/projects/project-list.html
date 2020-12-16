@@ -14,12 +14,21 @@
 			<tr>
 				<th> Project Name </th>
 				<th> Stage </th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		
 		<tr th:each="project:${projectList}">
 			<td th:text="${project.name}">
 			<td th:text="${project.stage}">
+			<td>
+	    	<a class="btn btn-primary btn-sm" th:href="@{/projects/update(id=${project.projectId})}">Edit</a>
+	    	<a class="btn btn-danger btn-sm" 
+	    		th:href="@{/projects/delete(id=${project.projectId})}" 
+	    		th:data-confirm-delete="|Are you sure you want to delete the project ${project.name}?|"
+  				onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"
+	    		>Delete</a>
+	    </td>
 		</tr>
 		
 	</table>

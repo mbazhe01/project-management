@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String displayHome(Model model) throws JsonProcessingException {
 		
-		List<Project> projects = proRepo.findAll();
+		List<Project> projects = proRepo.findAll(Sort.by("name"));
 		List<EmployeeProject> employees =  emplRepo.getEmployeeProjects();
 		
 		List<ChartData> projectData = proRepo.getPojectSatus();

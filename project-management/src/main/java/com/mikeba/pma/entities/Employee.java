@@ -12,6 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Employee {
@@ -20,8 +26,16 @@ public class Employee {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="employee_seq")
 	@SequenceGenerator(name = "employee_seq", sequenceName = "employee_seq", allocationSize = 1)
 	private long employeeId;
+	
+	@NotNull
+	@Size(min=2, max=30)
 	private String firstName;
+	@NotBlank
+	@Size(min=2, max=30)
 	private String lastName;
+	@NotNull
+	@Size(min=2, max=30)
+	@Email
 	private String email;
 	
 	
@@ -31,6 +45,8 @@ public class Employee {
 	@JoinTable(name="project_employee",
 	joinColumns = @JoinColumn(name="employee_id"),
     inverseJoinColumns = @JoinColumn(name="project_id"))
+	
+	@JsonIgnore
 	private List<Project> projects;
 	
 	public Employee() {

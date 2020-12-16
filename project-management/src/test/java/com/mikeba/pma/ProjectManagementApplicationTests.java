@@ -16,10 +16,6 @@ import com.mikeba.pma.entities.Project;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@SqlGroup({
-    @Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"}),
-    @Sql(executionPhase = ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:drop.sql")
-})
 class ProjectManagementApplicationTests {
 
 	@Autowired
@@ -27,11 +23,13 @@ class ProjectManagementApplicationTests {
 	
 	@Test
 	void contextLoads() {
-		
+		int origSize = proRepo.findAll().size();
 		Project newProject = new Project("New Project", "COMPLETE", "Test Descr");
 		proRepo.save(newProject);
 		
-		assertEquals(5, proRepo.findAll().size());
+		
+		
+		assertEquals(++origSize, proRepo.findAll().size());
 		
 	}
 

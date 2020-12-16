@@ -7,11 +7,11 @@
 <body>
 <nav th:replace="layouts :: navbar"></nav>
 
-
-
 <div class="container">
 	<h3>Main Dashboard</h3>
 	<label>Version:</label><a th:text="${versionNum}"></a>
+	<h5 th:inline="text">User: [[${#httpServletRequest.remoteUser}]]</h5>
+	
 	<hr>
 	<div class="row">
 		<div class="col=md-6">

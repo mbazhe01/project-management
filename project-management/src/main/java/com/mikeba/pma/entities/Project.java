@@ -1,6 +1,7 @@
 package com.mikeba.pma.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,17 +14,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Project {
-
+		
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="project_seq")
 	@SequenceGenerator(name = "project_seq", sequenceName = "project_seq", allocationSize = 1)
 	private long projectId;
+	@NotNull
+	@Size(min=2, max=30)
 	private String name;
 	private String stage;
 	private String description;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date startDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date endDate;
 	
 	
 	@ManyToMany(cascade= {CascadeType.DETACH,CascadeType.MERGE,
@@ -43,6 +57,8 @@ public class Project {
 		this.name = name;
 		this.stage = stage;
 		this.description = description;
+		
+		
 	}
 	public Project(long projectId, String name, String stage, String description) {
 		super();
@@ -53,7 +69,7 @@ public class Project {
 	}
 	
 	
-	
+	@JsonIgnore
 	public List<Employee> getEmployees() {
 		return employees;
 	}
@@ -89,6 +105,28 @@ public class Project {
 		this.description = description;
 	}
 	
+	
+	
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+
 	public void addEmployee(Employee employee) {
 		if(employees ==null) {
 			employees = new ArrayList<>();

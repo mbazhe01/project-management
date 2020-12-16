@@ -3,56 +3,88 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 
 </head>
 
 <body>
 
 
-<nav th:replace="layouts :: navbar"></nav>
+	<nav th:replace="layouts :: navbar"></nav>
 
-	
+
 	<div class="container">
 		<h3>New Project</h3>
-		<form  action="/projects/save" th:object="${project}" method="POST">
-  		
-  		<div class="form-group">
-		<input class="form-control" type="text" placeholder="Project Name" th:field="*{name}">
-		</div>
-		
-		<div class="form-group">
-		<select class="form-control" th:field="${project.stage}">
-			<option th:value="NOTSTARTED"> Not Started</option>
-			<option th:value="INPROGRESS"> In Progress</option>
-			<option th:value="COMPLETED"> Completed</option>
-		</select>
-		</div>
-		
-		<div class="form-group">
-		<textarea class="form-control" type="text" placeholder="Enter Project Description" th:field="${project.description}"></textarea>
-		</div>
-		
-		<div class="form-group">
-		<select class="form-control" th:field="*{employees}" multiple="multiple">
-			<option th:each="employee:${allEmployees}"
-			        th:value="${employee.employeeId}"
-			        th:text="${employee.firstName} + ' ' + ${employee.lastName} " >
-			</option>
-		</select>
-		</div>
-	
-		<button type="submit">Create Project</button>
-		
+		<form th:action="@{/projects/save}" th:object="${project}"
+			method="POST">
+
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="Project Name"
+					th:field="*{name}">
+			</div>
+
+			<div class="form-group">
+				<select class="form-control" th:field="${project.stage}">
+					<option th:value="NOTSTARTED">Not Started</option>
+					<option th:value="INPROGRESS">In Progress</option>
+					<option th:value="COMPLETED">Completed</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<textarea class="form-control" type="text"
+					placeholder="Enter Project Description"
+					th:field="${project.description}"></textarea>
+			</div>
+
+			<div class="form-group">
+				<select class="form-control" th:field="*{employees}"
+					multiple="multiple">
+					<option th:each="employee:${allEmployees}"
+						th:value="${employee.employeeId}"
+						th:text="${employee.firstName} + ' ' + ${employee.lastName} ">
+					</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<input class="form-control" type="text" placeholder="start date"
+					th:field="*{startDate}">
+				<p class="alert alert-danger"
+					th:if="${#fields.hasErrors('startDate')}" th:text="${startDateErr}">
+				<p class="alert alert-danger"
+					th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">
+			</div>
+			<div class="form-group">
+				<input class="form-control mb-sm-3" type="text"
+					placeholder="end date" th:field="*{endDate}">
+
+				<div class mt-sm-3>
+					<!-- -->  
+					<p class="alert alert-danger"
+						th:if="${#fields.hasErrors('endDate')}" th:text="${endDateErr}">
+					
+					<!-- 
+					<p class="alert alert-danger"
+						th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">
+					-->
+				</div>
+			</div>
+
+			<button type="submit">Create Project</button>
+
 		</form>
 	</div>
-	
+
 </body>
 
 </html>

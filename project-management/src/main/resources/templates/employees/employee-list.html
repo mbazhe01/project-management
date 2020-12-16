@@ -20,6 +20,7 @@
 		    	<th>First Name</th>
 		    	<th>Last Name</th>
 		    	<th>Email</th>
+		    	<th>Action</th>
 	  		</tr>
 		</thead>
 	  
@@ -27,6 +28,14 @@
 	    <td th:text="${employee.firstName}"></td>
 	    <td th:text="${employee.lastName}"></td>
 	    <td th:text="${employee.email}"></td>
+	    <td>
+	    	<a class="btn btn-primary btn-sm" th:href="@{/employees/update(id=${employee.employeeId})}">Edit</a>
+	    	<a class="btn btn-danger btn-sm" 
+	    		th:href="@{/employees/delete(id=${employee.employeeId})}" 
+	    		th:data-confirm-delete="|Are you sure you want to delete the employee ${employee.firstName} ${employee.lastName}?|"
+  				onclick="if (!confirm(this.getAttribute('data-confirm-delete'))) return false"
+	    		>Delete</a>
+	    </td>
 	  </tr>
    </table>
 	
