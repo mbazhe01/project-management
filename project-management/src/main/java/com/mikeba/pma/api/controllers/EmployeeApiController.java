@@ -30,7 +30,7 @@ public class EmployeeApiController {
 	
 	@GetMapping("/{id}")
 	public Employee getEmployyeeById(@PathVariable("id") long id) {
-		return empRepo.findById(id).get();
+		return empRepo.findById(id);
 	}
 	
 	@PostMapping( consumes="application/json")
@@ -49,7 +49,7 @@ public class EmployeeApiController {
 	
 	@PatchMapping(path="/{id}",consumes="application/json")
 	public Employee partialUpdate(@PathVariable("id") long id, @RequestBody Employee patchEmployee) {
-		Employee emp = empRepo.findById(id).get();
+		Employee emp = empRepo.findById(id);
 		
 		if(patchEmployee.getEmail()!=null)
 			emp.setEmail(patchEmployee.getEmail());

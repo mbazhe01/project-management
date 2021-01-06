@@ -60,6 +60,20 @@ public class Project {
 		
 		
 	}
+	
+	public Project( String name, String stage, 
+			String description, 
+			Date startDate,
+			Date endDate) {
+		super();
+		this.name = name;
+		this.stage = stage;
+		this.description = description;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
+
 	public Project(long projectId, String name, String stage, String description) {
 		super();
 		this.projectId = projectId;

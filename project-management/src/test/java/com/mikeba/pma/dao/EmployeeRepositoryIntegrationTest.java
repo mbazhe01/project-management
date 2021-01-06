@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,8 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.mikeba.pma.ProjectManagementApplication;
-import com.mikeba.pma.entities.Project;
+import com.mikeba.pma.entities.Address;
+import com.mikeba.pma.entities.Employee;
 
 @SpringBootTest
 @ContextConfiguration(classes=ProjectManagementApplication.class)
@@ -28,29 +30,45 @@ import com.mikeba.pma.entities.Project;
     @Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"})
     
 })
-public class ProjectRepositoryIntegrationTest {
+public class EmployeeRepositoryIntegrationTest {
 
 	@Autowired
-	ProjectRepository proRepo;
+	EmployeeRepository emplRepo;
+	
+	@Autowired
+	AddressRepository addrRepo;
 	
 	@Test
-	public void ifNewProjectSaved_thenSucces() throws ParseException {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-		String startString = "7-Jun-2013";
-		String endString = "7-Jun-2020";
-		 
-		Date start = simpleDateFormat.parse( startString );    
-		Date end = simpleDateFormat.parse( endString );  
-		
-		Project newProject = new Project("New Project Fake", "COMPLETED", "Test Descr",
-				   start, end);
-		
+	public void ifNewEmployeeSaved_thenSucces() throws ParseException {
 				
-		List<Project> projects = proRepo.findAll(Sort.by("name"));
+		List<Employee> employees = emplRepo.findAll(Sort.by("lastName"));
 		
-		long origSize = projects.size();
-		proRepo.save(newProject);
+		long origSize = employees.size();
 		
-		assertEquals(++origSize, proRepo.findAll(Sort.by("name")).size());
+		
+		
+		try {
+			Employee emp = new Employee("Vlad", "Lenin", "sky@gmail.com");
+			emp.setAddresses(new ArrayList<>());
+			Address address = new Address("405 Red Square", "", "Miami", "FL", "10022" );
+			address.setEmployee(emp);
+			emp.getAddresses().add(address);
+			emp = emplRepo.save(emp);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		/**
+		Address address = new Address("405 Leffer Ave", "", "Miami", "FL", "10022" );
+		address.setEmployee(emp);
+		try {
+			addrRepo.save(address);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		**/
+		
+		long newSize = emplRepo.findAll(Sort.by("lastName")).size();
+		assertEquals(++origSize, newSize);
 	}
 }

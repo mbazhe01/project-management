@@ -46,12 +46,13 @@ public class AppErrorController implements ErrorController {
 	private ErrorAttributes errorAttributes;
 
 	private static volatile String errorPagePath;
-
+	private static volatile String errMsg;
+	
 	@GetMapping("/error")
 	public String handleError(HttpServletRequest request, Model model) {
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		String message = null;
-
+		
 		ServletWebRequest servletWebRequest = new ServletWebRequest(request);
 		Map<String, Object> errorAttributes = this.errorAttributes.getErrorAttributes(servletWebRequest, true);
 		final StringBuilder errorDetails = new StringBuilder();
@@ -59,6 +60,9 @@ public class AppErrorController implements ErrorController {
 			errorDetails.append("|").append(attribute).append("--").append(value).append("|");
 			if (attribute.equals("path"))
 				errorPagePath = value.toString();
+			else if (attribute.equals("message")) {
+				errMsg = value.toString();
+			}
 		});
 
 		if (status != null) {
@@ -71,6 +75,7 @@ public class AppErrorController implements ErrorController {
 				return "errorpages/error-404";
 			} else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
 				message = String.format(internalServerError, errorPagePath);
+				message += "\n\n"+ errMsg ;
 				model.addAttribute("message", message);
 
 				return "errorpages/error-500";

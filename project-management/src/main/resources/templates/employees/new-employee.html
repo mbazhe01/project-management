@@ -16,31 +16,60 @@
 			method="POST">
 
 			<div class="form-group">
-				<label for="name">First Name:</label> 
-				<input type="text"
+				<label for="name">First Name:</label> <input type="text"
 					placeholder="Enter first name" th:field="${employee.firstName}">
 				<p class="alert alert-danger"
 					th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
 			</div>
 
 			<div class="form-group">
-				<label for="last name">Last Name:</label> 
-				<input type="text"
+				<label for="last name">Last Name:</label> <input type="text"
 					placeholder="Enter last name" th:field="${employee.lastName}">
 				<p class="alert alert-danger"
 					th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
 			</div>
-			
+
 
 			<div class="form-group">
-				<label for="email">Email:</label> 
-				<input type="text"
+				<label for="email">Email:</label> <input type="text"
 					placeholder="Enter email" th:field="${employee.email}">
-				<p class="alert alert-danger"
-					th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+				<p class="alert alert-danger" th:if="${#fields.hasErrors('email')}"
+					th:errors="*{email}">
 			</div>
 
-			<button type="submit">Create Employee</button>
+			<div class="form-group">
+				<h5>Addresses:</h5>
+
+				<button type="submit" name="newaddress" value="Newadress">Add
+					Address</button>
+				
+				<table>
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Address Line 1</th>
+							<th>Address Line 2</th>
+							<th>City</th>
+							<th>State</th>
+							<th>Zip</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="address, itemStat : *{addresses}">
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressId}" /></td>
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressLine1}" /></td>
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressLine2}" /></td>
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressCity}" /></td>
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressState}" /></td>
+							<td><input th:field="*{addresses[__${itemStat.index}__].addressZip}" /></td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<button type="submit" name="save" value="Save">Create
+				Employee</button>
 
 		</form>
 	</div>

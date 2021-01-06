@@ -14,11 +14,12 @@ import com.mikeba.pma.entities.Project;
 
 public interface ProjectRepository extends PagingAndSortingRepository<Project, Long> {
 
-	/**
+	
 	@Override
 	List<Project> findAll();
-	**/
 	
+	
+	@Override
 	List<Project> findAll(Sort sort);
 	
 	@Query(value = "SELECT stage as label, count(stage) as value FROM PROJECT "

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
@@ -23,13 +24,13 @@ class ProjectManagementApplicationTests {
 	
 	@Test
 	void contextLoads() {
-		int origSize = proRepo.findAll().size();
+		
+		int origSize = proRepo.findAll(Sort.by("name")).size();
 		Project newProject = new Project("New Project", "COMPLETE", "Test Descr");
 		proRepo.save(newProject);
 		
 		
-		
-		assertEquals(++origSize, proRepo.findAll().size());
+		assertEquals(++origSize, proRepo.findAll(Sort.by("name")).size());
 		
 	}
 

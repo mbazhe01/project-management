@@ -101,8 +101,6 @@ public class ProjectController {
 
 	@PostMapping("/update")
 	public String updateProject(@Valid Project project, Errors errors, Model model) {
-		int rtn = errors.getErrorCount();
-		String startDateErrMsg = null;
 		if (null != errors && errors.getErrorCount() > 0) {
 
 			String errMsg = null;

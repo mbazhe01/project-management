@@ -3,6 +3,7 @@ package com.mikeba.pma.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mikeba.pma.dao.ProjectRepository;
@@ -15,7 +16,7 @@ public class ProjectService {
 	ProjectRepository projRepo;
 	
 	public List<Project> findAll(){
-		return projRepo.findAll();
+		return projRepo.findAll(Sort.by("name"));
 	}
 
 	public Project findById(long id) {

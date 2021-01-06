@@ -16,6 +16,8 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 	
 	List<Employee> findAll(Sort sort);
 	
+	Employee findById(long id);
+	
 	/**
 	@Query(value="SELECT e.first_name as firstName, e.last_name as lastName, e.email as email "+
 			"FROM EMPLOYEE e order by 2",
@@ -33,4 +35,6 @@ public interface EmployeeRepository extends PagingAndSortingRepository<Employee,
 			 		"order by 3 desc",
 			 		nativeQuery = true)
 	List<EmployeeProject> getEmployeeProjects();
+	
+	
 }
